@@ -26,7 +26,7 @@ public class SwaggerConfiguration {
 
                 .select()
 
-                .apis(RequestHandlerSelectors.basePackage("com.bycdao.cloud"))
+                .apis(RequestHandlerSelectors.basePackage("com.springboot.frame"))
 
                 .paths(PathSelectors.any())
 
