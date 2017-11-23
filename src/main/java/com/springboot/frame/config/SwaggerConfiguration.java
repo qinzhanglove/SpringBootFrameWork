@@ -1,5 +1,6 @@
 package com.springboot.frame.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -14,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Created by jack rose on 2017/11/22.
  */
 @Configuration
+@ConditionalOnProperty(name = "swagger.enable", havingValue = "true")
 @EnableSwagger2
 public class SwaggerConfiguration {
 
