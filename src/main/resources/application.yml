@@ -3,6 +3,16 @@ server:
   port: 80
 # 启用Swagger文档
 swagger.enable: true
+#cxf 配置
+cxf:
+  path: /webservice
+  servlet:
+    init: 0
+    load-on-startup:  0
+  jaxrs:
+    component-scan: true
+    classes-scan-packages: org.apache.cxf.jaxrs.swagger
+
 # Spring配置
 spring:
   datasource:
@@ -47,3 +57,4 @@ spring:
   #页面热部署
   thymeleaf:
       cache: false
+
