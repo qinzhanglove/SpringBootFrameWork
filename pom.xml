@@ -26,6 +26,8 @@
 		<mysql.version>5.1.35</mysql.version>
 		<QueryDSL.version>4.1.4</QueryDSL.version>
 		<druid.version>1.0.29</druid.version>
+		<cxf.version>3.2.1</cxf.version>
+		<lombok.version>1.16.18</lombok.version>
 		<swagger2.version>2.2.2</swagger2.version>
 		<edit.swagger2.version>1.6</edit.swagger2.version>
 	</properties>
@@ -42,6 +44,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- CXF -->
+		<!--ws-->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!--rs-->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxrs</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!--cxf swagger2-->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!-- CXF -->
 		<!--mysql-->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -53,11 +80,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<!--<scope>provided</scope>--><!--这里一定要注释，否则使用Application方式运行异常.-->
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
 		</dependency>
 		<!--引入druid最新maven依赖-->
 		<dependency>
@@ -76,12 +98,25 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger2.version}</version>
 		</dependency>-->
-		<!--swagger2 二次开发的-->
+		<!--cxf swagger2-ui-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>swagger-ui</artifactId>
+			<version>2.2.10-1</version>
+		</dependency>
+		<!--swagger2-ui 二次开发的-->
 		<dependency>
 			<groupId>com.github.xiaoymin</groupId>
 			<artifactId>swagger-bootstrap-ui</artifactId>
 			<version>${edit.swagger2.version}</version>
 		</dependency>
+		<!--lombok依赖-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+
 		<!-- GSON工具 -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -143,6 +178,13 @@
 				<groupId>com.querydsl</groupId>
 				<artifactId>querydsl-maven-plugin</artifactId>
 				<version>${QueryDSL.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>export</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
 					<jdbcUrl>jdbc:mysql://localhost:3306/test?useUnicode=true</jdbcUrl>
@@ -156,14 +198,14 @@
 					<beanPackageName>com.springboot.frame.entity</beanPackageName>
 					<tableNamePattern>%</tableNamePattern>
 				</configuration>
-				<!--<dependencies>
-					&lt;!&ndash;数据库对应的驱动包&ndash;&gt;
+				<dependencies>
+					<!--数据库对应的驱动包-->
 					<dependency>
 						<groupId>mysql</groupId>
 						<artifactId>mysql-connector-java</artifactId>
 						<version>5.1.35</version>
 					</dependency>
-				</dependencies>-->
+				</dependencies>
 			</plugin>
 		</plugins>
 
