@@ -1,5 +1,6 @@
 package com.springboot.frame.controller;
 
+import com.springboot.frame.config.QueryFactory;
 import com.springboot.frame.entity.User;
 import com.springboot.frame.jpa.UserJPA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -18,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserJPA userJPA;
+    @Autowired
+    private QueryFactory queryFactory;
 
         /**
          * 查询用户列表方法
@@ -27,6 +31,13 @@ public class UserController {
         public List<User> list(){
             return userJPA.findAll();
         }
+
+        @RequestMapping(value ="/find" ,method = RequestMethod.GET)
+        public List<User> find(@Valid User user){
+
+
+            return userJPA.findAll();
+    }
 
         /**
          * 添加、更新用户方法

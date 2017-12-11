@@ -17,7 +17,7 @@ import javax.xml.ws.Endpoint;
  * Created by jack rose on 2017/11/25.
  */
 @Configuration
-public class CxfConfig {
+public class CxfConfiguration {
 
     @Autowired
     private Bus bus;

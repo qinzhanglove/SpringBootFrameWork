@@ -194,8 +194,8 @@
 					<packageName>com.springboot.frame.query</packageName>
 					<targetFolder>${project.basedir}/src/main/java</targetFolder>
 					<sourceFolder>src/main/resources</sourceFolder>
-					<exportBeans>true</exportBeans>
-					<beanPackageName>com.springboot.frame.entity</beanPackageName>
+					<!--<exportBeans>true</exportBeans>
+					<beanPackageName>com.springboot.frame.entity</beanPackageName>-->
 					<tableNamePattern>%</tableNamePattern>
 				</configuration>
 				<dependencies>

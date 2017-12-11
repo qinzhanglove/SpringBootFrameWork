@@ -9,7 +9,7 @@ import javax.jws.WebService;
  * Created by jack rose on 2017/11/25.
  */
 @WebService(serviceName = "CommonService", // 与接口中指定的name一致
-        targetNamespace = "http://impl.soap.frame.springboot.com/", // 与接口中的命名空间一致,一般是接口的包名倒
+        targetNamespace = "http://soap.frame.springboot.com/", // 与接口中的命名空间一致,一般是接口的包名倒序
         endpointInterface = "com.springboot.frame.soap.CommonService"// 接口地址
 )
 @Component

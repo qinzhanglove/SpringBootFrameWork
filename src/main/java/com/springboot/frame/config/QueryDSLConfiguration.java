@@ -18,7 +18,7 @@ import java.sql.Connection;
  * Created by jack rose on 2017/11/23.
  */
 @Configuration
-public class QueryDSLConfig {
+public class QueryDSLConfiguration {
 
     @Autowired
     private DataSource dataSource;

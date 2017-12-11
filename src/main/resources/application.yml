@@ -7,11 +7,11 @@ swagger.enable: true
 cxf:
   path: /webservice
   servlet:
-    init: 0
+    #init: 0
     load-on-startup:  0
-  jaxrs:
-    component-scan: true
-    classes-scan-packages: org.apache.cxf.jaxrs.swagger
+  #jaxrs:
+  #  component-scan: true
+  #  classes-scan-packages: org.apache.cxf.jaxrs.swagger
 
 # Spring配置
 spring:
@@ -57,4 +57,11 @@ spring:
   #页面热部署
   thymeleaf:
       cache: false
+  #指定message的basename，多个以逗号分隔，如果不加包名的话，默认从classpath路径开始，默认: messages
+  messages:
+    basename: i18n/messages_zh_CN.properties
+  #设定加载的资源文件缓存失效时间，-1的话为永不过期，默认为-1
+    cache-seconds:  3600
+  #设定Message bundles的编码，默认: UTF-8
+    encoding: UTF-8
 
