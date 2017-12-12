@@ -1,5 +1,6 @@
 package com.springboot.frame.controller;
 
+import com.springboot.frame.common.ResultBean;
 import com.springboot.frame.config.QueryFactory;
 import com.springboot.frame.entity.User;
 import com.springboot.frame.jpa.UserJPA;
@@ -28,8 +29,11 @@ public class UserController {
          * @return
          */
         @RequestMapping(value ="/list" ,method = RequestMethod.GET)
-        public List<User> list(){
-            return userJPA.findAll();
+        public ResultBean<List<User>> list(){
+            List<User> userList = userJPA.findAll();
+            ResultBean resultBean = new ResultBean();
+            resultBean.setData(userList);
+            return resultBean;
         }
 
         @RequestMapping(value ="/find" ,method = RequestMethod.GET)
