@@ -31,6 +31,8 @@ public class PageResultBean<T> implements Serializable{
     //接口相应时间毫秒单位
     private long time;
 
+    private String url;
+
     public PageResultBean(){
         super();
     }

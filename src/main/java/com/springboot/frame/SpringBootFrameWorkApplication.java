@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableAdminServer
+//@EnableAdminServer
 public class SpringBootFrameWorkApplication {
 
 	public static void main(String[] args) {
