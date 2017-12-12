@@ -1,4 +1,9 @@
-
+info: #定义各种额外的详情给服务端显示
+  app:
+    name: "@project.name@" #从pom.xml中获取
+    description: "@project.description@"
+    version: "@project.version@"
+    spring-boot-version: "@project.parent.version@"
 # 服务配置
 server:
   port: 80
@@ -21,7 +26,7 @@ spring:
     active: dev
   management:
     security:
-      enabled: false
+      enabled: false # spring-boot 1.5.2之后严格执行安全策略，所以需要配置这个为false
   security:
     basic:
       enabled: false
@@ -36,6 +41,7 @@ spring:
           user.name: "${security.user.name}"
           user.password:  "${security.user.password}"
       context-path: /sba
+      url: http://localhost
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
