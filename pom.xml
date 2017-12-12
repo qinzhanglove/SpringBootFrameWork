@@ -30,6 +30,7 @@
 		<lombok.version>1.16.18</lombok.version>
 		<swagger2.version>2.2.2</swagger2.version>
 		<edit.swagger2.version>1.6</edit.swagger2.version>
+		<spring.boot.admin.version>1.5.0</spring.boot.admin.version>
 	</properties>
 
 	<dependencies>
@@ -43,6 +44,32 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<!--spring-boot-admin-->
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>${spring.boot.admin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server</artifactId>
+			<version>${spring.boot.admin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server-ui</artifactId>
+			<version>${spring.boot.admin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-server-ui-login</artifactId>
+			<version>${spring.boot.admin.version}</version>
+		</dependency>
+		<!--security-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<!--web-->
 		<dependency>

@@ -1,6 +1,8 @@
+
 # 服务配置
 server:
   port: 80
+  context-path: /app/api
 # 启用Swagger文档
 swagger.enable: true
 #cxf 配置
@@ -17,6 +19,23 @@ cxf:
 spring:
   profiles:
     active: dev
+  management:
+    security:
+      enabled: false
+  security:
+    basic:
+      enabled: false
+  application:
+    name: svc-monitor    # 配置访问路径为：http://localhost:64000/svc-monitor/sba
+  boot:
+    admin:
+      username: "${security.user.name}"
+      password: "${security.user.password}"
+      client:
+        metadata:
+          user.name: "${security.user.name}"
+          user.password:  "${security.user.password}"
+      context-path: /sba
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -72,4 +91,7 @@ spring:
     cache-seconds:  3600
   #设定Message bundles的编码，默认: UTF-8
     encoding: UTF-8
-
+security:
+  user:
+    name: user
+    password: pass

@@ -50,7 +50,6 @@ public class ControllerAOP {
 	public void doBefore(JoinPoint joinPoint){
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
-
 		//url
 		logger.info("url={}",request.getRequestURL());
 		//method
