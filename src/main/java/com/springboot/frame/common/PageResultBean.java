@@ -28,9 +28,6 @@ public class PageResultBean<T> implements Serializable{
 
     private int pages;
 
-    //接口相应时间毫秒单位
-    private long time;
-
     private String url;
 
     public PageResultBean(){
@@ -41,13 +38,6 @@ public class PageResultBean<T> implements Serializable{
         this.data = data;
         this.total = total;
         this.pages = pages;
-        this.time = System.currentTimeMillis();
-    }
-
-    public PageResultBean(Throwable e) {
-        super();
-        this.msg = e.toString();
-        this.code = FAIL;
     }
 
 }

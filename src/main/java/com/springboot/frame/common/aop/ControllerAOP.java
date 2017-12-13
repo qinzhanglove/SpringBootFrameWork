@@ -20,6 +20,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -35,19 +36,31 @@ import java.util.Set;
 public class ControllerAOP {
 	private static final Logger logger = LoggerFactory.getLogger(ControllerAOP.class);
 
+	ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+
 	@Value("${spring.profiles}")
 	private String env;
 
 	/**
-	 * 定义拦截规则：拦截com.xjj.web.controller包下面的所有类中，有@RequestMapping注解的方法。
+	 * 定义拦截规则：拦截com.springboot.frame.web.controller包下面的所有类中，有@RequestMapping注解的方法。
+	 * 定义一个切入点.
+	 * 解释下：
+	 *
+	 * ~ 第一个 * 代表任意修饰符及任意返回值.
+	 * ~ 第二个 * 任意包名
+	 * ~ 第三个 * 代表任意方法.
+	 * ~ 第四个 * 定义在web包或者子包
+	 * ~ 第五个 * 任意方法
+	 * ~ .. 匹配任意数量的参数.
 	 */
 	@Pointcut("execution(* com.springboot.frame.controller..*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
 	public void log(){
-
+		logger.info("----------------------定义切点并设置切点方法---------------");
 	}
 
 	@Before("log()")
 	public void doBefore(JoinPoint joinPoint){
+		startTime.set(System.currentTimeMillis());
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
 		//url
@@ -55,28 +68,31 @@ public class ControllerAOP {
 		//method
 		logger.info("method={}",request.getMethod());
 		//ip
-		logger.info("id={}",request.getRemoteAddr());
+		logger.info("ip={}",request.getRemoteAddr());
 		//class_method
 		logger.info("class_method={}",joinPoint.getSignature().getDeclaringTypeName() + "," + joinPoint.getSignature().getName());
 		//args[]
 		logger.info("args={}",joinPoint.getArgs());
+		/*Enumeration<String> enu=request.getParameterNames();
+		while(enu.hasMoreElements()){
+			String paraName=(String)enu.nextElement();
+			logger.info(paraName+": "+request.getParameter(paraName));
+		}*/
 	}
 
 	@Around("log()")
 	public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
-		long startTime = System.currentTimeMillis();
 		MethodSignature signature = (MethodSignature) pjp.getSignature();
 		Method method = signature.getMethod(); //获取被拦截的方法
 		String methodName = method.getName(); //获取被拦截的方法名
 		Set<Object> allParams = new LinkedHashSet<>(); //保存所有请求参数，用于输出到日志中
 		logger.info("请求开始，方法：{}", methodName);
-		ResultBean<?> result;
+		ResultBean<?> result=null;
 		Object[] args = pjp.getArgs();
 		for(Object arg : args){
 			//logger.debug("arg: {}", arg);
 			if (arg instanceof Map<?, ?>) {
 				//提取方法中的MAP参数，用于记录进日志中
-				@SuppressWarnings("unchecked")
 				Map<String, Object> map = (Map<String, Object>) arg;
 
 				allParams.add(map);
@@ -100,19 +116,26 @@ public class ControllerAOP {
 				//allParams.add(arg);
 			}
 		}
-
 		try {
-			result = (ResultBean<?>) pjp.proceed();
-			logger.info(pjp.getSignature() + "use time:" + (System.currentTimeMillis() - startTime));
+			if(null == result) {
+				// 一切正常的情况下，继续执行被拦截的方法
+				result = (ResultBean<?>) pjp.proceed();
+				logger.info(pjp.getSignature() + "use time:" + (startTime.get()));
+			}
 		} catch (Throwable e) {
 			result = handlerException(pjp, e);
 		}
+
 		if(result instanceof ResultBean){
-			long costMs = System.currentTimeMillis() - startTime;
-			logger.info("{}请求结束，耗时：{}ms", methodName, costMs);
+			//long costMs = startTime;
+			logger.info("{}请求结束，耗时：{}ms", methodName, startTime.get());
 		}
 
 		return result;
+	}
+	@After("log()")
+	public void after(){
+		logger.info("--------------------------执行后----------------------");
 	}
 
 	@AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
@@ -132,7 +155,6 @@ public class ControllerAOP {
 			result.setCode(ResultBean.NO_LOGIN);
 		} */else {
 			logger.error(pjp.getSignature() + " error ", e);
-
 			//TODO 未知的异常，应该格外注意，可以发送邮件通知等
 			result.setMsg(e.toString());
 			result.setCode(ResultBean.FAIL);

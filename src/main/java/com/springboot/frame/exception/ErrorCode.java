@@ -13,7 +13,8 @@ public enum ErrorCode {
     CAPTCHA_ERROR(400, 2010, "CAPTCHA ERROR."),
     UNKNOW_ERROR(-1,"未知错误"),
     USER_NOT_FIND(-101,"user not exist"),
-    NO_LOGIN(102,"user don't login");
+    NO_LOGIN(102,"user don't login"),
+    PARAMETER_ERROR(3008,"parameter is error");
 
     private int httpStatusCode;
     private int errorCode;
