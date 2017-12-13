@@ -20,8 +20,6 @@ public class ResultBean<T> implements Serializable {
 
 	private String msg = "success";
 
-	private int status;
-
 	private int code = SUCCESS;
 
 	private T data;
@@ -35,10 +33,15 @@ public class ResultBean<T> implements Serializable {
 		this.data = data;
 	}
 
-	public ResultBean(int status,int code,String msg,String url) {
-		this.status = status;
+	public ResultBean(int code,String msg) {
 		this.code = code;
 		this.msg = msg;
+	}
+
+	public ResultBean(Throwable e) {
+		super();
+		this.msg = e.toString();
+		this.code = FAIL;
 	}
 
 }

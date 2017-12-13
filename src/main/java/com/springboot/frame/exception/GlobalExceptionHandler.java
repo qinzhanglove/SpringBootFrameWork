@@ -49,14 +49,11 @@ public class GlobalExceptionHandler {
      * @return
      * @throws Exception
      */
-    /*@ResponseBody
-    @ExceptionHandler(value = BusinessException.class)
-    public ResultBean jsonErrorHandler(HttpServletRequest req, BusinessException e) throws Exception {
-        ResultBean resultBean = new ResultBean();
-        resultBean.setMsg(e.getMessage());
-        resultBean.setUrl(req.getRequestURL().toString());
-        return resultBean;
-    }*/
+    @ResponseBody
+    @ExceptionHandler(value = Exception.class)
+    public ResultBean jsonErrorHandler(HttpServletRequest req, Exception e){
+        return new ResultBean(e);
+    }
 
 
     /**

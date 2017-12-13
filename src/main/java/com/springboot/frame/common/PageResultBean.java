@@ -28,11 +28,12 @@ public class PageResultBean<T> implements Serializable{
 
     private int pages;
 
-    private String url;
+
 
     public PageResultBean(){
         super();
     }
+
     public PageResultBean(List<T> data,Long total,int pages){
         super();
         this.data = data;

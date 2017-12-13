@@ -1,7 +1,7 @@
 package com.springboot.frame.exception;
 
 
-import com.springboot.frame.util.ErrorMessagePropertiesUtil;
+import com.springboot.frame.utils.ErrorMessagePropertiesUtil;
 
 /**
  * Created by jack rose on 2017/11/30.

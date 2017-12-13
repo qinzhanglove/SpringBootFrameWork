@@ -8,10 +8,7 @@ import com.springboot.frame.exception.ErrorCode;
 import com.springboot.frame.jpa.UserJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,6 +24,12 @@ public class UserController {
     private UserJPA userJPA;
     @Autowired
     private QueryFactory queryFactory;
+    @ResponseBody
+    @GetMapping(value = "/find")
+    public ResultBean<List<User>> find(){
+        return new ResultBean(userJPA.findAll());
+    }
+
     @ResponseBody
     @RequestMapping("/hello1")
     public String hello1() {

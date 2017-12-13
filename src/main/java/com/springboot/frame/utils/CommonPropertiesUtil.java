@@ -1,4 +1,4 @@
-package com.springboot.frame.util;
+package com.springboot.frame.utils;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

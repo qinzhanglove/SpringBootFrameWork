@@ -141,8 +141,9 @@ public class ControllerAOP {
 	@AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
 	public void doAfterReturing(Object object){
 		logger.info("response={}",object.toString());
-		logger.info("SPEND TIME {}ms: " + (System.currentTimeMillis() - startTime.get()));
+		logger.info("SPEND TIME {}ms",(System.currentTimeMillis() - startTime.get()));
 	}
+
 
 	private ResultBean<?> handlerException(ProceedingJoinPoint pjp, Throwable e) {
 		ResultBean<?> result = new ResultBean();
