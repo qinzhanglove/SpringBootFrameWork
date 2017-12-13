@@ -120,15 +120,15 @@ public class ControllerAOP {
 			if(null == result) {
 				// 一切正常的情况下，继续执行被拦截的方法
 				result = (ResultBean<?>) pjp.proceed();
-				logger.info(pjp.getSignature() + "use time:" + (startTime.get()));
+				logger.info(pjp.getSignature() + "use time:{}ms" + (System.currentTimeMillis()-startTime.get()));
 			}
 		} catch (Throwable e) {
 			result = handlerException(pjp, e);
 		}
 
 		if(result instanceof ResultBean){
-			//long costMs = startTime;
-			logger.info("{}请求结束，耗时：{}ms", methodName, startTime.get());
+			long costMs = System.currentTimeMillis()-startTime.get();
+			logger.info("{}请求结束，耗时：{}ms", methodName, costMs);
 		}
 
 		return result;
@@ -141,6 +141,7 @@ public class ControllerAOP {
 	@AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
 	public void doAfterReturing(Object object){
 		logger.info("response={}",object.toString());
+		logger.info("SPEND TIME {}ms: " + (System.currentTimeMillis() - startTime.get()));
 	}
 
 	private ResultBean<?> handlerException(ProceedingJoinPoint pjp, Throwable e) {
