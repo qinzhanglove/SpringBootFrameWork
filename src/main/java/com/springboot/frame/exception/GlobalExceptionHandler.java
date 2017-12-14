@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -35,43 +36,30 @@ import java.util.Set;
  */
 
 
-@ControllerAdvice
+@ControllerAdvice(annotations = Controller.class)
 public class GlobalExceptionHandler {
 
     private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    public static final String DEFAULT_ERROR_VIEW = "error";
 
 
     /**
      * 自定义异常捕捉处理 JSON
-     * @param req
+     * @param request
      * @param e
      * @return
      * @throws Exception
      */
     @ResponseBody
     @ExceptionHandler(value = Exception.class)
-    public ResultBean jsonErrorHandler(HttpServletRequest req, Exception e){
-        return new ResultBean(e);
+    public ResultBean defaultExceptionHandler(HttpServletRequest request, Exception e){
+        if(e instanceof BusinessException){
+            BusinessException businessException = (BusinessException)e;
+            ErrorCode errorCode = businessException.getErrorCode();
+            String message = businessException.getMessage();
+            return new ResultBean(errorCode.getErrorCode(),message,"");
+        }
+        return new ResultBean(ResultBean.FAIL,"Internal Server Error.","");
     }
-
-
-    /**
-     * 自定义异常捕捉处理 page
-     * @param req
-     * @param e
-     * @return
-     * @throws Exception
-     */
-    /*@ExceptionHandler(value = BusinessException.class)
-    public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("message", e.getMessage());
-        modelAndView.addObject("url", req.getRequestURL());
-        modelAndView.setViewName(DEFAULT_ERROR_VIEW);
-        return modelAndView;
-    }*/
-
 
 
 }

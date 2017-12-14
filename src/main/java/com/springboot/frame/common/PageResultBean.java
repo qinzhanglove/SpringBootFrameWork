@@ -22,23 +22,19 @@ public class PageResultBean<T> implements Serializable{
 
     private int code = SUCCESS;
 
-    private List<T> data;
-
     private Long total;
 
+    private List<T> data;
+
     private int pages;
-
-
 
     public PageResultBean(){
         super();
     }
 
-    public PageResultBean(List<T> data,Long total,int pages){
-        super();
-        this.data = data;
+    public PageResultBean(Long total, List<T> data, int pages) {
         this.total = total;
+        this.data = data;
         this.pages = pages;
     }
-
 }

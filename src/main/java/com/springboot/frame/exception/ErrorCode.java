@@ -8,9 +8,9 @@ import com.springboot.frame.utils.ErrorMessagePropertiesUtil;
  */
 public enum ErrorCode {
 
-    INTERNAL_ERROR(500, 1000, "Internal Server Error."),
-    AUTHTOKEN_ERROR(401, 2000, "AuthToken Error or Expired."),
-    CAPTCHA_ERROR(400, 2010, "CAPTCHA ERROR."),
+    INTERNAL_ERROR(1000, "Internal Server Error."),
+    AUTHTOKEN_ERROR(2000, "AuthToken Error or Expired."),
+    CAPTCHA_ERROR(2010, "CAPTCHA ERROR."),
     UNKNOW_ERROR(-1,"未知错误"),
     USER_NOT_FIND(-101,"user not exist"),
     NO_LOGIN(102,"user don't login"),

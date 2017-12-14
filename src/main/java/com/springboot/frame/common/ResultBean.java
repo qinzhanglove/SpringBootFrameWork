@@ -2,6 +2,7 @@ package com.springboot.frame.common;
 
 import java.io.Serializable;
 
+import com.springboot.frame.utils.ErrorMessagePropertiesUtil;
 import lombok.Data;
 
 @Data
@@ -17,12 +18,12 @@ public class ResultBean<T> implements Serializable {
 
 	public static final int NO_PERMISSION = 2;
 
+	private int code = SUCCESS;
 
 	private String msg = "success";
 
-	private int code = SUCCESS;
-
 	private T data;
+
 
 	public ResultBean() {
 		super();
@@ -33,15 +34,10 @@ public class ResultBean<T> implements Serializable {
 		this.data = data;
 	}
 
-	public ResultBean(int code,String msg) {
+	public ResultBean(int code,String msg,T data) {
 		this.code = code;
 		this.msg = msg;
-	}
-
-	public ResultBean(Throwable e) {
-		super();
-		this.msg = e.toString();
-		this.code = FAIL;
+		this.data = data;
 	}
 
 }

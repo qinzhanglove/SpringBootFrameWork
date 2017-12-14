@@ -4,6 +4,7 @@ import com.springboot.frame.common.ResultBean;
 import com.springboot.frame.common.annotation.Permission;
 import com.springboot.frame.exception.BusinessException;
 import com.springboot.frame.exception.ErrorCode;
+import com.springboot.frame.exception.GlobalExceptionHandler;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -55,7 +56,7 @@ public class ControllerAOP {
 	 */
 	@Pointcut("execution(* com.springboot.frame.controller..*(..)) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
 	public void log(){
-		logger.info("----------------------定义切点并设置切点方法---------------");
+
 	}
 
 	@Before("log()")
@@ -73,14 +74,10 @@ public class ControllerAOP {
 		logger.info("class_method={}",joinPoint.getSignature().getDeclaringTypeName() + "," + joinPoint.getSignature().getName());
 		//args[]
 		logger.info("args={}",joinPoint.getArgs());
-		/*Enumeration<String> enu=request.getParameterNames();
-		while(enu.hasMoreElements()){
-			String paraName=(String)enu.nextElement();
-			logger.info(paraName+": "+request.getParameter(paraName));
-		}*/
+
 	}
 
-	@Around("log()")
+	/*@Around("log()")
 	public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
 		MethodSignature signature = (MethodSignature) pjp.getSignature();
 		Method method = signature.getMethod(); //获取被拦截的方法
@@ -88,7 +85,7 @@ public class ControllerAOP {
 		Set<Object> allParams = new LinkedHashSet<>(); //保存所有请求参数，用于输出到日志中
 		logger.info("请求开始，方法：{}", methodName);
 		ResultBean<?> result=null;
-		Object[] args = pjp.getArgs();
+		*//*Object[] args = pjp.getArgs();
 		for(Object arg : args){
 			//logger.debug("arg: {}", arg);
 			if (arg instanceof Map<?, ?>) {
@@ -115,55 +112,38 @@ public class ControllerAOP {
 			}else{
 				//allParams.add(arg);
 			}
-		}
+		}*//*
 		try {
 			if(null == result) {
 				// 一切正常的情况下，继续执行被拦截的方法
 				result = (ResultBean<?>) pjp.proceed();
 				logger.info(pjp.getSignature() + "use time:{}ms" + (System.currentTimeMillis()-startTime.get()));
 			}
-		} catch (Throwable e) {
-			result = handlerException(pjp, e);
+
+		} catch (Exception e) {
+			ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+			HttpServletRequest request = attributes.getRequest();
+			//result = globalExceptionHandler.runtimeExceptionHandler(request,e);
 		}
 
-		if(result instanceof ResultBean){
+		*//*if(result instanceof ResultBean){
 			long costMs = System.currentTimeMillis()-startTime.get();
 			logger.info("{}请求结束，耗时：{}ms", methodName, costMs);
-		}
+		}*//*
 
 		return result;
-	}
-	@After("log()")
+	}*/
+	/*@After("log()")
 	public void after(){
-		logger.info("--------------------------执行后----------------------");
+		logger.info("--------------------------执行后3----------------------");
 	}
-
+*/
 	@AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
 	public void doAfterReturing(Object object){
 		logger.info("response={}",object.toString());
 		logger.info("SPEND TIME {}ms",(System.currentTimeMillis() - startTime.get()));
 	}
 
-
-	private ResultBean<?> handlerException(ProceedingJoinPoint pjp, Throwable e) {
-		ResultBean<?> result = new ResultBean();
-
-		// 已知异常
-		if (e instanceof BusinessException) {
-			result.setMsg(e.getLocalizedMessage());
-			result.setCode(ResultBean.FAIL);
-		} /*else if (e instanceof UnloginException) {
-			result.setMsg("Unlogin");
-			result.setCode(ResultBean.NO_LOGIN);
-		} */else {
-			logger.error(pjp.getSignature() + " error ", e);
-			//TODO 未知的异常，应该格外注意，可以发送邮件通知等
-			result.setMsg(e.toString());
-			result.setCode(ResultBean.FAIL);
-		}
-
-		return result;
-	}
 
 	/**
 	 * 判断一个方法是否需要登录

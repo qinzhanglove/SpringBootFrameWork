@@ -103,16 +103,7 @@
             return new ResultBean(e);
         }
 
-        /**
-         * 500 - Internal Server Error
-         */
-        @ResponseBody
-        @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-        @ExceptionHandler(Exception.class)
-        public ResultBean handleException(Exception e) {
-            logger.error("通用异常", e);
-            return new ResultBean(e);
-        }
+
 
         /**
          * 操作数据库出现异常:名称重复，外键关联
@@ -146,12 +137,20 @@
             return new ResultBean(501, 5002, ex.getMessage(),request.getRequestURL().toString());
         }*/
 
-        @ExceptionHandler(value = { NoHandlerFoundException.class })
-        @ResponseStatus(HttpStatus.NOT_FOUND)
-        @ResponseBody
-        public ResultBean noHandlerFoundException(HttpServletRequest request,Exception ex) {
-            return new ResultBean(404, 4041, ex.getMessage(),request.getRequestURL().toString());
-        }
+        /**
+             * 400 - Bad Request
+             */
+            @ResponseBody
+            @ResponseStatus(HttpStatus.BAD_REQUEST)
+            @ExceptionHandler(MissingServletRequestParameterException.class)
+            public ResultBean handleMissingServletRequestParameterException(HttpServletRequest request,MissingServletRequestParameterException e) {
+                logger.error("缺少请求参数", e);
+                ResultBean resultBean = new ResultBean();
+                resultBean.setCode(ResultBean.FAIL);
+                resultBean.setMsg("null");
+                resultBean.setUrl(request.getRequestURL().toString());
+                return resultBean;
+            }
 
         //添加全局异常处理流程，根据需要设置需要处理的异常，本文以MethodArgumentNotValidException为例
         @ExceptionHandler(value=MethodArgumentNotValidException.class)
@@ -171,3 +170,31 @@
             }
             return new ResultBean(400,3008,invalidArguments.toString(),request.getRequestURL().toString());
         }
+
+        /**
+             * 500 - Internal Server Error
+             */
+            @ResponseBody
+            @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+            @ExceptionHandler(Exception.class)
+            public ResultBean handleException(Exception e) {
+                return new ResultBean(new BusinessException(ErrorCode.INTERNAL_ERROR));
+            }
+
+                        /**
+             * 自定义异常捕捉处理 page
+             * @param req
+             * @param e
+             * @return
+             * @throws Exception
+             */
+            @ExceptionHandler(value = Exception.class)
+            public ModelAndView defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+                ModelAndView modelAndView = new ModelAndView();
+                modelAndView.addObject("message", e.getMessage());
+                modelAndView.addObject("url", req.getRequestURL());
+                modelAndView.setViewName(DEFAULT_ERROR_VIEW);
+                return modelAndView;
+            }
+
+
