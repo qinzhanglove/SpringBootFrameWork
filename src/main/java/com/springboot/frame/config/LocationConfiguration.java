@@ -15,9 +15,12 @@ import java.util.Locale;
 /**
  * Created by jack rose on 2017/12/11.
  */
+/*
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
+*/
+/*
 public class LocationConfiguration extends WebMvcConfigurerAdapter{
 
 
@@ -43,3 +46,4 @@ public class LocationConfiguration extends WebMvcConfigurerAdapter{
     }
 
 }
+*/

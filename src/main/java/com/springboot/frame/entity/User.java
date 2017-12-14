@@ -13,15 +13,27 @@ import java.io.Serializable;
 public class User implements Serializable {
     @Id
     @GeneratedValue
-    @Column(name = "t_id")
-    private Long id;
+    @Column(name = "t_user_id")
+    private Long userId;
+
+    @NotBlank
     @Column(name = "t_address")
     private String address;
+
+    @NotBlank
     @Column(name = "t_age")
     private Integer age;
+
+    @NotBlank
     @Column(name = "t_name")
     private String name;
-    @NotBlank(message = "邮箱地址不能为空")
+
+    @NotBlank
+    @Column(name = "t_password")
+    private String password;
+
+
+    @NotBlank
     @Email
     @Column(name = "t_email")
     private String email;

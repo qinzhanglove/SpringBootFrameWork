@@ -68,10 +68,10 @@
 			<version>${spring.boot.admin.version}</version>
 		</dependency>
 		<!--security-->
-		<!--<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
+		</dependency>
 		<!--web-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -226,9 +226,12 @@
 				</executions>
 				<configuration>
 					<jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
-					<jdbcUrl>jdbc:mysql://localhost:3306/test?useUnicode=true</jdbcUrl>
+					<!--<jdbcUrl>jdbc:mysql://localhost:3306/test?useUnicode=true</jdbcUrl>
 					<jdbcUser>root</jdbcUser>
-					<jdbcPassword>root</jdbcPassword>
+					<jdbcPassword>root</jdbcPassword>-->
+					<jdbcUrl>jdbc:mysql://121.42.142.228:3306/test?useUnicode=true</jdbcUrl>
+					<jdbcUser>youyi</jdbcUser>
+					<jdbcPassword>youyi</jdbcPassword>
 					<exportForeignKeys>false</exportForeignKeys>
 					<packageName>com.springboot.frame.query</packageName>
 					<targetFolder>${project.basedir}/src/main/java</targetFolder>
