@@ -29,6 +29,7 @@
 		<druid.version>1.0.29</druid.version>
 		<cxf.version>3.2.1</cxf.version>
 		<lombok.version>1.16.18</lombok.version>
+		<guava.version>18.0</guava.version>
 		<swagger2.version>2.2.2</swagger2.version>
 		<edit.swagger2.version>1.6</edit.swagger2.version>
 		<spring.boot.admin.version>1.5.0</spring.boot.admin.version>
@@ -120,6 +121,13 @@
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
 		</dependency>
+		<!--guava-->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
 		<!--swagger2 原厂的-->
 		<dependency>
 			<groupId>io.springfox</groupId>
