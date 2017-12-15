@@ -101,6 +101,10 @@ spring:
     encoding: UTF-8
   aop:
     proxy-target-class: true
+    auto: true
+  #devtools:
+  #  restart:
+  #    additional-paths:
 #security:
 #  user:
 #    name: user

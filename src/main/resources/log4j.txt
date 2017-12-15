@@ -197,4 +197,17 @@
                 return modelAndView;
             }
 
+-------------------------------------------------------------------------------------------------
+添加上传文件到其他目录
+token生成 jwt Oauth2
+spring Security
+定时任务 Quartz
+消息队列
+QueryDSL-SQL
+多模块
+CORS跨域访问
+MapStruct
 
+set server_host=121.42.142.228
+set username=root
+set password=uyi2July18
